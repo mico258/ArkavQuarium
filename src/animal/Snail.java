@@ -3,7 +3,10 @@ package animal;
 import droppable.Koin;
 import linkedlist.LinkedList;
 
+import droppable.Koin;
+
 public class Snail extends Animal {
+
 
 
     public Snail(double x, double y) {
