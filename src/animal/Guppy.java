@@ -1,28 +1,32 @@
 package animal;
 import linkedlist.LinkedList;
-import draw.*;
+import droppable.Koin;
+import droppable.Food;
+
+import static droppable.Koin.BASE_KOIN;
 
 public class Guppy extends Fish {
 
-    public static int GUPPY_COIN = 3;
+    public static int GUPPY_Koin = 3;
     public static int PHASE_2 = 5;
     public static int PHASE_3 = 10;
     public static int MAX_PHASE = 3;
-    public static int COIN_VALUE_PHASE_1 = 1;
-    public static int COIN_VALUE_PHASE_2 = 2;
-    public static int COIN_VALUE_PHASE_3 = 3;
-    public static int COIN_PERIODIC = 400;
+    public static int Koin_VALUE_PHASE_1 = 1;
+    public static int Koin_VALUE_PHASE_2 = 2;
+    public static int Koin_VALUE_PHASE_3 = 3;
+    public static int Koin_PERIODIC = 400;
 
     private int phase;
     private int totalEatenFood;
-    private int coinValue;
+    private int KoinValue;
 
     public Guppy(double x, double y) {
         super(x, y, GUPPY_SPEED);
         setPhase(1);
         setTotalEatenFood(0);
-        setCoinValue(COIN_VALUE_PHASE_1);
+        setKoinValue(Koin_VALUE_PHASE_1);
     }
+
 
     public void eat(LinkedList<Food> listFood) {
         if (!listFood.isEmpty()) {
@@ -51,16 +55,16 @@ public class Guppy extends Fish {
             }
         }else randomMove();
     }
-    public Coin makeCoin(int phase) {
-        return new Coin(getX(), getY(), getCoinValue() * BASE_COIN);
+    public Koin makeKoin(int phase) {
+        return new Koin(getX(), getY(), getKoinValue() * BASE_KOIN);
     }
 
     public void nextPhase() {
         phase++;
         if(phase == 2) {
-            setCoinValue(COIN_VALUE_PHASE_2);
+            setKoinValue(Koin_VALUE_PHASE_2);
         } else if(phase == 3) {
-            setCoinValue(COIN_VALUE_PHASE_3);
+            setKoinValue(Koin_VALUE_PHASE_3);
         }
     }
 
@@ -85,10 +89,10 @@ public class Guppy extends Fish {
         }else return 0;
     }
 
-    public int synchronize(LinkedList<Coin> listCoin) {
+    public int synchronize(LinkedList<Koin> listKoin) {
         setLifetime((getLifetime() + 1) % 1000);
-        if (getLifetime() % COIN_PERIODIC == 0) {
-            listCoin.add(makeCoin(0));
+        if (getLifetime() % Koin_PERIODIC == 0) {
+            listKoin.add(makeKoin(0));
         }
         if (notHungry()) {
             setStillFull(getStillFull() - 1);
@@ -133,11 +137,11 @@ public class Guppy extends Fish {
         this.totalEatenFood = totalEatenFood;
     }
 
-    public int getCoinValue() {
-        return coinValue;
+    public int getKoinValue() {
+        return KoinValue;
     }
 
-    public void setCoinValue(int coinValue) {
-        this.coinValue = coinValue;
+    public void setKoinValue(int KoinValue) {
+        this.KoinValue = KoinValue;
     }
 }

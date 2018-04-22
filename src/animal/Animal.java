@@ -1,6 +1,5 @@
 package animal;
 
-import draw.*;
 import position.Move;
 
 public class Animal extends Move{

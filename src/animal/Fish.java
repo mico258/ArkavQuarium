@@ -2,6 +2,7 @@ package animal;
 
 import position.Coordinate;
 import linkedlist.LinkedList;
+import droppable.Koin;
 
 import java.util.Random;
 
@@ -90,7 +91,7 @@ public abstract class Fish extends Animal {
         return stillFull != 0;
     }
 
-    public Coin dropCoin(int phase){return null;}
+    public Koin dropKoin(int phase){return null;}
 
-    public int synchronize(LinkedList<Coin> listCoin){return 0;}
+    public int synchronize(LinkedList<Koin> listKoin){return 0;}
 }
