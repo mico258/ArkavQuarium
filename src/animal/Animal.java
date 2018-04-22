@@ -1,52 +1,26 @@
 package animal;
 
 import draw.*;
+import position.Move;
 
-public abstract class Animal {
-    private double xPosition;
-    private double yPosition;
-    private String image;
+public class Animal extends Move{
 
+    public static int LOOKING_LEFT = 0;
+    public static int LOOKING_RIGHT = 1;
 
+    private int lookAt;
 
-
-    private double speed;
-
-    public Animal(double xPosition, double yPosition, String image) {
-        this.xPosition = xPosition;
-        this.yPosition = yPosition;
-        this.image = image;
+    public Animal(double x, double y, double speed) {
+        super(x, y, speed);
+        lookAt = LOOKING_LEFT;
     }
 
-    public double getxPosition() {
-        return xPosition;
+    public int getLookAt() {
+        return lookAt;
     }
 
-    public void setxPosition(double xPosition) {
-        this.xPosition = xPosition;
+    public void setLookAt(int lookAt) {
+        this.lookAt = lookAt;
     }
 
-    public double getyPosition() {
-        return yPosition;
-    }
-
-    public void setyPosition(double yPosition) {
-        this.yPosition = yPosition;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public double getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(double speed) {
-        this.speed = speed;
-    }
 }
