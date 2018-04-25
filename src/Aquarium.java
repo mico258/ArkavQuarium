@@ -24,7 +24,7 @@ import java.util.Random;
 
 
 
-public class Aquarium extends JPanel{
+public class Aquarium extends JPanel {
     private static final int BASE_EGG_PRICE = 30;
     public static int SCREEN_WIDTH = 640;
     public static int SCREEN_HEIGHT = 480;
@@ -36,9 +36,11 @@ public class Aquarium extends JPanel{
     public static int PLAY = 1;
     public static int FINISH = 2;
 
-    private final String CURRENT_IMAGE = "D:\\Kuliah\\Semester 6\\OOP\\Java\\ArkavQuarium\\src\\draw\\guppy1.png";
-    private final String BACKGROUND_IMAGE = "D:\\Kuliah\\Semester 6\\OOP\\Java\\ArkavQuarium\\src\\draw\\Aquarium1.jpg";
-    private final String BAR_IMAGE = "D:\\Kuliah\\Semester 6\\OOP\\Java\\ArkavQuarium\\src\\draw\\bar.jpg";
+    private final String CURRENT_IMAGE = "C:\\Users\\ASUS ROG\\Desktop\\ArkavQuarium\\src\\draw\\guppy1.png";
+    private final String BACKGROUND_IMAGE = "C:\\Users\\ASUS ROG\\Desktop\\ArkavQuarium\\src\\draw\\Aquarium1.jpg";
+    private final String BAR_IMAGE = "C:\\Users\\ASUS ROG\\Desktop\\ArkavQuarium\\src\\draw\\bar.jpg";
+    private final String WIN_IMAGE = "C:\\Users\\ASUS ROG\\Desktop\\ArkavQuarium\\src\\draw\\win.png";
+    private final String LOSE_IMAGE = "C:\\Users\\ASUS ROG\\Desktop\\ArkavQuarium\\src\\draw\\lose.jpg";
 
 
     private linkedlist.LinkedList<Guppy> listGuppy;
@@ -131,7 +133,7 @@ public class Aquarium extends JPanel{
 
     public void setResult(int result){
         status = FINISH;
-        res = WIN == result ? "WIN" : "LOSE";
+        res = WIN == result ? WIN_IMAGE : LOSE_IMAGE;
         jFrame.invalidate();
         jFrame.validate();
         jFrame.repaint();
@@ -223,9 +225,9 @@ public class Aquarium extends JPanel{
                     if (i != listKoin.size()){
                         duit += listKoin.get(i).getValue();
                         listKoin.remove(i);
-                    }else if (mouseX > 54 - 30 && mouseX < 54 + 30 && mouseY > 32 - 30 && mouseY < 32 + 30){
+                    }else if (mouseX > 581 - 30 && mouseX < 581 + 30 && mouseY > 55 - 10 && mouseY < 55 + 10){
                         saveFile();
-                    }else if (mouseX > 482 - 30 && mouseX < 482 + 30 && mouseY > 32 - 30 && mouseY < 32 + 30){
+                    }else if (mouseX > 330 - 30 && mouseX < 330 + 30 && mouseY > 32 - 30 && mouseY < 32 + 30){
                         if (duit >= GUPPY_PRICE){
                             duit -= GUPPY_PRICE;
                             double aa,bb;
@@ -253,7 +255,7 @@ public class Aquarium extends JPanel{
                             Piranha p = new Piranha(aa, bb);
                             listPiranha.add(p);
                         }
-                    }else if (mouseX > 575 - 30 && mouseX < 575 + 30 && mouseY > 32 - 30 && mouseY < 32 + 30){
+                    }else if (mouseX > 482 - 30 && mouseX < 482 + 30 && mouseY > 32 - 30 && mouseY < 32 + 30){
                         if (duit >= BASE_EGG_PRICE * (telur + 1)){
                             telur++;
                             duit -= BASE_EGG_PRICE * telur;
@@ -687,37 +689,40 @@ public class Aquarium extends JPanel{
         g.drawImage(readImage(BACKGROUND_IMAGE), 0, 0, null);
 
         if (status == HOME){
-            g.drawImage(readImage("D:\\Kuliah\\Semester 6\\OOP\\Java\\ArkavQuarium\\src\\draw\\button_start.png"), SCREEN_WIDTH / 2 - 45, SCREEN_HEIGHT / 2 - 50, null);
-            g.drawImage(readImage("D:\\Kuliah\\Semester 6\\OOP\\Java\\ArkavQuarium\\src\\draw\\button_load.png"), SCREEN_WIDTH / 2 - 45, SCREEN_HEIGHT / 2 + 50, null);
+            g.drawImage(readImage("C:\\Users\\ASUS ROG\\Desktop\\ArkavQuarium\\src\\draw\\button_start.png"), SCREEN_WIDTH / 2 - 45, SCREEN_HEIGHT / 2 - 50, null);
+            g.drawImage(readImage("C:\\Users\\ASUS ROG\\Desktop\\ArkavQuarium\\src\\draw\\button_load.png"), SCREEN_WIDTH / 2 - 45, SCREEN_HEIGHT / 2 + 50, null);
             return;
         }
 
         if (status == FINISH){
-            g.drawString(res, SCREEN_WIDTH / 2 - 30, SCREEN_HEIGHT / 2 - 30);
+            setBackground(Color.WHITE);
+            g.setColor(Color.WHITE);
+
+            g.drawImage(readImage(res), 0, 0, null);
         }
 
         g.drawImage(readImage(BAR_IMAGE), 0, 0, null);
 
         //save
-        g.drawString("SAVE", 30, 28);
+        g.drawString("SAVE", 560, 20);
 
         //beli telor
-        String telorImg = "D:\\Kuliah\\Semester 6\\OOP\\Java\\ArkavQuarium\\src\\draw\\";
+        String telorImg = "C:\\Users\\ASUS ROG\\Desktop\\ArkavQuarium\\src\\draw\\";
         telorImg += String.valueOf(telur + 1) + ".jpg";
         g.drawImage(readImage(telorImg), 450, 5, null);
         String hargaTelor = "Rp. " + BASE_EGG_PRICE * (telur + 1);
         g.drawString(hargaTelor, 445, 59);
 
         //beli guppy
-        g.drawImage(readImage("D:\\Kuliah\\Semester 6\\OOP\\Java\\ArkavQuarium\\src\\draw\\guppy1.png"), 240, -35, null);
+        g.drawImage(readImage("C:\\Users\\ASUS ROG\\Desktop\\ArkavQuarium\\src\\draw\\guppy1.png"), 240, -35, null);
         g.drawString("Rp. 5", 305, 59);
 
         //beli piranha
-        g.drawImage(readImage("D:\\Kuliah\\Semester 6\\OOP\\Java\\ArkavQuarium\\src\\draw\\rsz_piranha.png"), 375, 6, null);
+        g.drawImage(readImage("C:\\Users\\ASUS ROG\\Desktop\\ArkavQuarium\\src\\draw\\rsz_piranha.png"), 375, 6, null);
         g.drawString("Rp. 20", 375, 59);
 
         //uang
-        //g.drawImage(readImage("D:\\Kuliah\\Semester 6\\OOP\\Java\\ArkavQuarium\\src\\draw\\koin.png"), 285, 15, null);
+        //g.drawImage(readImage("C:\\Users\\ASUS ROG\\Desktop\\ArkavQuarium\\src\\draw\\koin.png"), 285, 15, null);
         String uang = "Rp. " + duit;
         g.drawString(uang, 565, 54);
 
