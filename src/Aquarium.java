@@ -460,7 +460,7 @@ public class Aquarium extends JPanel{
         catch(FileNotFoundException ex) {
             System.out.println(
                     "Unable to open file '" +
-                            fileName + "'");
+                            fileName    + "'");
         }
         catch(IOException ex) {
             System.out.println(
