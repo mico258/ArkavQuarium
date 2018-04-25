@@ -1,3 +1,4 @@
+package aquarium;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -24,43 +25,183 @@ import java.util.Random;
 
 
 
+/**
+ *Class Aquarium.
+ *
+ * @author Mico
+ *
+ */
+
 public class Aquarium extends JPanel {
-    private static final int BASE_EGG_PRICE = 30;
-    public static int SCREEN_WIDTH = 640;
-    public static int SCREEN_HEIGHT = 480;
-    public static int LOSE = 0;
-    public static int WIN = 1;
-    public static int LOAD = 0;
-    public static int NEW = 1;
-    public static int HOME = 0;
-    public static int PLAY = 1;
-    public static int FINISH = 2;
 
-    private final String CURRENT_IMAGE = "C:\\Users\\ASUS ROG\\Desktop\\ArkavQuarium\\src\\draw\\guppy1.png";
-    private final String BACKGROUND_IMAGE = "C:\\Users\\ASUS ROG\\Desktop\\ArkavQuarium\\src\\draw\\Aquarium1.jpg";
-    private final String BAR_IMAGE = "C:\\Users\\ASUS ROG\\Desktop\\ArkavQuarium\\src\\draw\\bar.jpg";
-    private final String WIN_IMAGE = "C:\\Users\\ASUS ROG\\Desktop\\ArkavQuarium\\src\\draw\\win.png";
-    private final String LOSE_IMAGE = "C:\\Users\\ASUS ROG\\Desktop\\ArkavQuarium\\src\\draw\\lose.jpg";
+    /**
+     *
+     * Harga Dasar Egg.
+     *
+     */
+
+    private static final int BASE_EGG_PRICE = 50;
+    /**
+     * Lebar Layar.
+     *
+     */
+    public static final int SCREEN_WIDTH = 640;
+    /**
+     * Tinggi Layar.
+     *
+     */
+
+    public static final int SCREEN_HEIGHT = 480;
+
+    /**
+     * Status Jika Kalah.
+     *
+     */
+    public static final int LOSE = 0;
+    /**
+     * Status Jika Menang.
+     *
+     */
+    public static final int WIN = 1;
+    /**
+     * Status Saat Load Game.
+     *
+     */
+    public static final int LOAD = 0;
+    /**
+     * Status Saat Play New Game.
+     *
+     */
+    public static final int NEW = 1;
+    /**
+     * Status Saat Load Game.
+     *
+     */
+    public static final int HOME = 0;
+    /**
+     * Status Saat Bermain Game.
+     *
+     */
+    public static final int PLAY = 1;
+    /**
+     * Status Saat Game Berakhir.
+     *
+     */
+    public static final int FINISH = 2;
+
+    /**
+     * Alamat Gambar.
+     *
+     */
+    private final String CURRENT_IMAGE =
+            "C:\\Users\\ASUS ROG\\Desktop\\ArkavQuarium\\src\\draw\\guppy1.png";
+    /**
+     * Alamat Gambar BackGround.
+     *
+     */
+    private final String BACKGROUND_IMAGE =
+            "C:\\Users\\ASUS ROG\\Desktop\\ArkavQuarium\\src\\draw\\Aquarium1.jpg";
+    /**
+     * Alamat Gambar Bar.
+     *
+     */
+    private final String BAR_IMAGE =
+            "C:\\Users\\ASUS ROG\\Desktop\\ArkavQuarium\\src\\draw\\bar.jpg";
+    /**
+     * Alamat Gambar Menang.
+     *
+     */
+    private final String WIN_IMAGE =
+            "C:\\Users\\ASUS ROG\\Desktop\\ArkavQuarium\\src\\draw\\win.png";
+    /**
+     * Alamat Gambar Kalah.
+     *
+     */
+    private final String LOSE_IMAGE =
+            "C:\\Users\\ASUS ROG\\Desktop\\ArkavQuarium\\src\\draw\\lose.jpg";
 
 
+    /**
+     * List Guppy.
+     *
+     */
     private linkedlist.LinkedList<Guppy> listGuppy;
+    /**
+     * List Piranha.
+     *
+     */
     private LinkedList<Piranha> listPiranha;
+    /**
+     * List Food.
+     *
+     */
     private linkedlist.LinkedList<Food> listFood;
+    /**
+     * List Koin.
+     *
+     */
     private linkedlist.LinkedList<Koin> listKoin;
+
+    /**
+     * List Siput.
+     *
+     */
     private Snail snail;
+    /**
+     * Stage Telur.
+     *
+     */
     private int telur;
+    /**
+     * Total Uang.
+     *
+     */
     private int duit;
 
-
+    /**
+     * Buffer gambar.
+     *
+     */
     private BufferedImage defaultImage;
+    /**
+     * HashMap Gambar.
+     *
+     */
     private Map<String, BufferedImage> images;
+    /**
+     * Status dalam integer.
+     *
+     */
     private int status;
+    /**
+     * Gambar untuk kemenangan/kekalahan.
+     *
+     */
     private String res;
+    /**
+     * Kategory pemain.
+     *
+     */
     private int playCategory = -1;
 
+    /**
+     * fps game.
+     *
+     */
     private long fps;
 
+    /**
+     * Frame Program.
+     *
+     */
+
     private JFrame jFrame;
+
+    /**
+     * Constructor Aquarium.
+     * @param defaultObjectImagePath .
+     *
+     */
 
     public Aquarium(String defaultObjectImagePath) throws IOException {
         this.defaultImage = ImageIO.read(new File(defaultObjectImagePath));
@@ -76,6 +217,12 @@ public class Aquarium extends JPanel {
         playCategory = -1;
     }
 
+    /**
+     * Get Image
+     * @param path
+     *
+     * @return BufferedImage.
+     */
     private BufferedImage readImage(String path) {
         BufferedImage newImage = this.images.get(path);
         if (newImage == null) {
@@ -89,23 +236,35 @@ public class Aquarium extends JPanel {
         return newImage;
     }
 
-    public void startAquarium(){
+    /**
+     * method start.
+     *
+     *
+     */
+    public void startAquarium() {
         status = HOME;
 
-        while (playCategory == -1){
+        while (playCategory == -1) {
             System.out.println(playCategory);
         }
         playAquarium();
     }
 
-    public void playAquarium(){
+    /**
+     * method play.
+     *
+     *
+     */
+    public void playAquarium() {
         status = PLAY;
         long lastFrameStart = System.nanoTime();
         long now;
 
-        if (playCategory == LOAD)
+        if (playCategory == LOAD) {
             readFile();
-        else initDefault();
+        } else {
+            initDefault();
+        }
 
         while (true) {
             now = System.nanoTime();
@@ -113,11 +272,12 @@ public class Aquarium extends JPanel {
             if ((now - lastFrameStart) >= fps) {
                 syncAll();
 
-                if (telur == 3){
+                if (telur == 3) {
                     setResult(WIN);
                     break;
-                }else{
-                    if (listKoin.size() == 0 && listGuppy.size() == 0 && listPiranha.size() == 0 && duit < GUPPY_PRICE){
+                } else {
+                    if (listKoin.size() == 0 && listGuppy.size() == 0
+                            && listPiranha.size() == 0 && duit < GUPPY_PRICE) {
                         setResult(LOSE);
                         break;
                     }
@@ -131,7 +291,13 @@ public class Aquarium extends JPanel {
         }
     }
 
-    public void setResult(int result){
+    /**
+     * method setResult.
+     *
+     *@param result .
+     *
+     */
+    public void setResult(int result) {
         status = FINISH;
         res = WIN == result ? WIN_IMAGE : LOSE_IMAGE;
         jFrame.invalidate();
@@ -139,34 +305,42 @@ public class Aquarium extends JPanel {
         jFrame.repaint();
     }
 
-    public void syncAll(){
+    /**
+     * method sync.
+     *
+     *
+     */
+    public void syncAll() {
         int i = 0;
-        while (i < listFood.size()){
+        while (i < listFood.size()) {
             listFood.get(i).moveGeneral(listFood.get(i).getX(), 400);
 
-            if (listFood.get(i).getY() > 400){
+            if (listFood.get(i).getY() > 400) {
                 listFood.remove(i);
-            }else i++;
+            } else {
+                i++;
+            }
         }
 
         i = 0;
-        while (i < listKoin.size()){
-            if (!listKoin.get(i).beetweenY(400, 2)){
+        while (i < listKoin.size()) {
+            if (!listKoin.get(i).beetweenY(400, 2)) {
                 listKoin.get(i).moveGeneral(listKoin.get(i).getX(), 400);
             }
             i++;
         }
 
         i = 0;
-        while (i < listGuppy.size()){
+        while (i < listGuppy.size()) {
             int j = listGuppy.get(i).synchronize(listKoin);
-            if (j == 0){
+
+            if (j == 0) {
                 listGuppy.remove(i);
-            }else {
-                if (j == 1){
+            } else {
+                if (j == 1) {
                     //lapar
                     listGuppy.get(i).eat(listFood);
-                }else {
+                } else {
                     // ga lapar
                     listGuppy.get(i).randomMove();
                 }
@@ -175,15 +349,15 @@ public class Aquarium extends JPanel {
         }
 
         i = 0;
-        while (i < listPiranha.size()){
+        while (i < listPiranha.size()) {
             int j = listPiranha.get(i).synchronize(listKoin);
-            if (j == 0){
+            if (j == 0) {
                 listPiranha.remove(i);
-            }else{
-                if (j == 1){
+            } else {
+                if (j == 1) {
                     //laper
                     listPiranha.get(i).eat(listGuppy, listKoin);
-                }else{
+                } else {
                     //ga laper
                     listPiranha.get(i).randomMove();
                 }
@@ -195,6 +369,11 @@ public class Aquarium extends JPanel {
         duit += dapat;
     }
 
+    /**
+     * method buildFrame.
+     *
+     *
+     */
     public void buildFrame() {
         jFrame = new JFrame();
         jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -202,7 +381,12 @@ public class Aquarium extends JPanel {
         jFrame.setVisible(true);
     }
 
-    public void setContent(){
+    /**
+     * method setContent.
+     *
+     *
+     */
+    public void setContent() {
         jFrame.setContentPane(this);
         jFrame.getContentPane().addMouseListener(new MouseAdapter() {
             @Override
@@ -212,65 +396,74 @@ public class Aquarium extends JPanel {
                 double mouseX = e.getLocationOnScreen().getX();
                 double mouseY = e.getLocationOnScreen().getY();
 
-                if (status == PLAY){
+                if (status == PLAY) {
                     mouseY -= 35;
                     int i = 0;
-                    while(i < listKoin.size()){
-                        if (listKoin.get(i).beetweenX(mouseX, 20) && listKoin.get(i).beetweenY(mouseY, 20)){
+                    while (i < listKoin.size()) {
+                        if (listKoin.get(i).beetweenX(mouseX, 20)
+                                && listKoin.get(i).beetweenY(mouseY, 20)) {
                             break;
                         }
                         i++;
                     }
 
-                    if (i != listKoin.size()){
+                    if (i != listKoin.size()) {
                         duit += listKoin.get(i).getValue();
                         listKoin.remove(i);
-                    }else if (mouseX > 581 - 30 && mouseX < 581 + 30 && mouseY > 55 - 10 && mouseY < 55 + 10){
+                    } else if (mouseX > 581 - 30 && mouseX < 581 + 30
+                            && mouseY > 55 - 10 && mouseY < 55 + 10) {
                         saveFile();
-                    }else if (mouseX > 330 - 30 && mouseX < 330 + 30 && mouseY > 32 - 30 && mouseY < 32 + 30){
-                        if (duit >= GUPPY_PRICE){
+                    } else if (mouseX > 330 - 30 && mouseX < 330 + 30
+                            && mouseY > 32 - 30 && mouseY < 32 + 30) {
+                        if (duit >= GUPPY_PRICE) {
                             duit -= GUPPY_PRICE;
-                            double aa,bb;
+                            double aa;
+                            double bb;
                             Random r = new Random();
                             aa = 100 + (300 - 100) * r.nextDouble();
                             bb = 100 + (200 - 100) * r.nextDouble();
-                            if (aa < 20 && bb < 20){
+                            if (aa < 20 && bb < 20) {
                                 aa = SCREEN_WIDTH / 2;
                                 bb = SCREEN_HEIGHT / 2;
                             }
                             Guppy g = new Guppy(aa, bb);
                             listGuppy.add(g);
                         }
-                    }else if (mouseX > 395 - 30 && mouseX < 395 + 30 && mouseY > 32 - 30 && mouseY < 32 + 30){
-                        if (duit >= PIRANHA_PRICE){
+                    } else if (mouseX > 395 - 30 && mouseX < 395 + 30
+                            && mouseY > 32 - 30 && mouseY < 32 + 30) {
+                        if (duit >= PIRANHA_PRICE) {
                             duit -= PIRANHA_PRICE;
-                            double aa,bb;
+                            double aa;
+                            double bb;
                             Random r = new Random();
                             aa = 100 + (300 - 100) * r.nextDouble();
                             bb = 100 + (200 - 100) * r.nextDouble();
-                            if (aa < 20 && bb < 20){
+                            if (aa < 20 && bb < 20) {
                                 aa = SCREEN_WIDTH / 2;
                                 bb = SCREEN_HEIGHT / 2;
                             }
                             Piranha p = new Piranha(aa, bb);
                             listPiranha.add(p);
                         }
-                    }else if (mouseX > 482 - 30 && mouseX < 482 + 30 && mouseY > 32 - 30 && mouseY < 32 + 30){
-                        if (duit >= BASE_EGG_PRICE * (telur + 1)){
+                    } else if (mouseX > 482 - 30 && mouseX < 482 + 30
+                            && mouseY > 32 - 30 && mouseY < 32 + 30) {
+                        if (duit >= BASE_EGG_PRICE * (telur + 1)) {
                             telur++;
                             duit -= BASE_EGG_PRICE * telur;
                         }
-                    }else if (mouseY > 80 && mouseY < 400){
-                        if (duit - 2 >= 0){
+                    } else if (mouseY > 80 && mouseY < 400) {
+                        if (duit - 2 >= 0) {
                             duit -= 2;
                             Food ff = new Food(mouseX, mouseY);
                             listFood.add(ff);
                         }
                     }
-                }else if (status == HOME){
-                    if (mouseX > 330 - 100 && mouseX < 330 + 100 && mouseY > 240 - 40 && mouseY < 240 + 40){
+                } else if (status == HOME) {
+                    if (mouseX > 330 - 100 && mouseX < 330 + 100
+                            && mouseY > 240 - 40 && mouseY < 240 + 40) {
                         playCategory = NEW;
-                    }else if (mouseX > 330 - 100 && mouseX < 330 + 100 && mouseY > 340 - 40 && mouseY < 340 + 40){
+                    } else if (mouseX > 330 - 100 && mouseX < 330 + 100
+                            && mouseY > 340 - 40 && mouseY < 340 + 40) {
                         playCategory = LOAD;
                     }
                 }
@@ -279,7 +472,12 @@ public class Aquarium extends JPanel {
         });
     }
 
-    public void saveFile(){
+    /**
+     * method save.
+     *
+     *
+     */
+    public void saveFile() {
         String fileName;
 
         //duit
@@ -296,8 +494,7 @@ public class Aquarium extends JPanel {
 
             // Always close files.
             bufferedWriter.close();
-        }
-        catch(IOException ex) {
+        } catch (IOException ex) {
             System.out.println("Error writing to file '" + fileName + "'");
         }
 
@@ -315,8 +512,7 @@ public class Aquarium extends JPanel {
 
             // Always close files.
             bufferedWriter.close();
-        }
-        catch(IOException ex) {
+        } catch (IOException ex) {
             System.out.println("Error writing to file '" + fileName + "'");
         }
 
@@ -330,7 +526,7 @@ public class Aquarium extends JPanel {
             BufferedWriter bufferedWriter =
                     new BufferedWriter(fileWriter);
 
-            for (int i = 0; i < listGuppy.size(); i++){
+            for (int i = 0; i < listGuppy.size(); i++) {
                 Guppy g = listGuppy.get(i);
                 bufferedWriter.write(g.getX() + " " + g.getY() + " " + g.getSpeed() + " " + g.getLookAt()
                         + " " + g.getLifetime() + " " + g.getStillFull() + " " + g.getCountingDead() + " "
@@ -341,8 +537,7 @@ public class Aquarium extends JPanel {
 
             // Always close files.
             bufferedWriter.close();
-        }
-        catch(IOException ex) {
+        } catch (IOException ex) {
             System.out.println("Error writing to file '" + fileName + "'");
         }
 
@@ -356,7 +551,7 @@ public class Aquarium extends JPanel {
             BufferedWriter bufferedWriter =
                     new BufferedWriter(fileWriter);
 
-            for (int i = 0; i < listPiranha.size(); i++){
+            for (int i = 0; i < listPiranha.size(); i++) {
                 Piranha g = listPiranha.get(i);
                 bufferedWriter.write(g.getX() + " " + g.getY() + " " + g.getSpeed() + " " + g.getLookAt() + " "
                         + g.getLifetime() + " " + g.getStillFull() + " " + g.getCountingDead() + " "
@@ -366,8 +561,7 @@ public class Aquarium extends JPanel {
 
             // Always close files.
             bufferedWriter.close();
-        }
-        catch(IOException ex) {
+        } catch (IOException ex) {
             System.out.println("Error writing to file '" + fileName + "'");
         }
 
@@ -386,8 +580,7 @@ public class Aquarium extends JPanel {
 
             // Always close files.
             bufferedWriter.close();
-        }
-        catch(IOException ex) {
+        } catch (IOException ex) {
             System.out.println("Error writing to file '" + fileName + "'");
         }
 
@@ -401,7 +594,7 @@ public class Aquarium extends JPanel {
             BufferedWriter bufferedWriter =
                     new BufferedWriter(fileWriter);
 
-            for (int i = 0; i < listFood.size(); i++){
+            for (int i = 0; i < listFood.size(); i++) {
                 Food g = listFood.get(i);
                 bufferedWriter.write(g.getX() + " " + g.getY() + " " + g.getSpeed());
                 bufferedWriter.newLine();
@@ -409,8 +602,7 @@ public class Aquarium extends JPanel {
 
             // Always close files.
             bufferedWriter.close();
-        }
-        catch(IOException ex) {
+        } catch (IOException ex) {
             System.out.println("Error writing to file '" + fileName + "'");
         }
 
@@ -424,7 +616,7 @@ public class Aquarium extends JPanel {
             BufferedWriter bufferedWriter =
                     new BufferedWriter(fileWriter);
 
-            for (int i = 0; i < listKoin.size(); i++){
+            for (int i = 0; i < listKoin.size(); i++) {
                 Koin g = listKoin.get(i);
                 bufferedWriter.write(g.getX() + " " + g.getY() + " " + g.getSpeed() + " " + g.getValue());
                 bufferedWriter.newLine();
@@ -432,15 +624,20 @@ public class Aquarium extends JPanel {
 
             // Always close files.
             bufferedWriter.close();
-        }
-        catch(IOException ex) {
+        } catch (IOException ex) {
             System.out.println("Error writing to file '" + fileName + "'");
         }
 
     }
 
-    public void readFile(){
-        String fileName, line;
+    /**
+     * method load.
+     *
+     *
+     */
+    public void readFile() {
+        String fileName;
+        String line;
 
         //duit
         fileName = "duit.txt";
@@ -453,19 +650,16 @@ public class Aquarium extends JPanel {
             BufferedReader bufferedReader =
                     new BufferedReader(fileReader);
 
-            while((line = bufferedReader.readLine()) != null) {
+            while ((line = bufferedReader.readLine()) != null) {
                 duit = Integer.parseInt(line);
             }
 
             // Always close files.
             bufferedReader.close();
-        }
-        catch(FileNotFoundException ex) {
+        } catch (FileNotFoundException ex) {
             System.out.println(
-                    "Unable to open file '" +
-                            fileName    + "'");
-        }
-        catch(IOException ex) {
+                    "Unable to open file '" + fileName + "'");
+        } catch (IOException ex) {
             System.out.println(
                     "Error reading file '"
                             + fileName + "'");
@@ -482,19 +676,16 @@ public class Aquarium extends JPanel {
             BufferedReader bufferedReader =
                     new BufferedReader(fileReader);
 
-            while((line = bufferedReader.readLine()) != null) {
+            while ((line = bufferedReader.readLine()) != null) {
                 telur = Integer.parseInt(line);
             }
 
             // Always close files.
             bufferedReader.close();
-        }
-        catch(FileNotFoundException ex) {
+        } catch (FileNotFoundException ex) {
             System.out.println(
-                    "Unable to open file '" +
-                            fileName + "'");
-        }
-        catch(IOException ex) {
+                    "Unable to open file '" + fileName + "'");
+        } catch (IOException ex) {
             System.out.println(
                     "Error reading file '"
                             + fileName + "'");
@@ -511,7 +702,7 @@ public class Aquarium extends JPanel {
             BufferedReader bufferedReader =
                     new BufferedReader(fileReader);
 
-            while((line = bufferedReader.readLine()) != null) {
+            while ((line = bufferedReader.readLine()) != null) {
                 String[] data = line.split(" ");
                 Guppy g = new Guppy(Double.parseDouble(data[0]), Double.parseDouble(data[1]));
                 g.setSpeed(Double.parseDouble(data[2]));
@@ -528,13 +719,10 @@ public class Aquarium extends JPanel {
 
             // Always close files.
             bufferedReader.close();
-        }
-        catch(FileNotFoundException ex) {
+        } catch (FileNotFoundException ex) {
             System.out.println(
-                    "Unable to open file '" +
-                            fileName + "'");
-        }
-        catch(IOException ex) {
+                    "Unable to open file '" + fileName + "'");
+        } catch (IOException ex) {
             System.out.println(
                     "Error reading file '"
                             + fileName + "'");
@@ -551,7 +739,7 @@ public class Aquarium extends JPanel {
             BufferedReader bufferedReader =
                     new BufferedReader(fileReader);
 
-            while((line = bufferedReader.readLine()) != null) {
+            while ((line = bufferedReader.readLine()) != null) {
                 String[] data = line.split(" ");
                 Piranha g = new Piranha(Double.parseDouble(data[0]), Double.parseDouble(data[1]));
                 g.setSpeed(Double.parseDouble(data[2]));
@@ -565,13 +753,10 @@ public class Aquarium extends JPanel {
 
             // Always close files.
             bufferedReader.close();
-        }
-        catch(FileNotFoundException ex) {
+        } catch (FileNotFoundException ex) {
             System.out.println(
-                    "Unable to open file '" +
-                            fileName + "'");
-        }
-        catch(IOException ex) {
+                    "Unable to open file '" + fileName + "'");
+        } catch (IOException ex) {
             System.out.println(
                     "Error reading file '"
                             + fileName + "'");
@@ -588,7 +773,7 @@ public class Aquarium extends JPanel {
             BufferedReader bufferedReader =
                     new BufferedReader(fileReader);
 
-            while((line = bufferedReader.readLine()) != null) {
+            while ((line = bufferedReader.readLine()) != null) {
                 String[] data = line.split(" ");
                 Food g = new Food(Double.parseDouble(data[0]), Double.parseDouble(data[1]));
                 g.setSpeed(Double.parseDouble(data[2]));
@@ -597,13 +782,10 @@ public class Aquarium extends JPanel {
 
             // Always close files.
             bufferedReader.close();
-        }
-        catch(FileNotFoundException ex) {
+        } catch (FileNotFoundException ex) {
             System.out.println(
-                    "Unable to open file '" +
-                            fileName + "'");
-        }
-        catch(IOException ex) {
+                    "Unable to open file '" + fileName + "'");
+        } catch (IOException ex) {
             System.out.println(
                     "Error reading file '"
                             + fileName + "'");
@@ -620,7 +802,7 @@ public class Aquarium extends JPanel {
             BufferedReader bufferedReader =
                     new BufferedReader(fileReader);
 
-            while((line = bufferedReader.readLine()) != null) {
+            while ((line = bufferedReader.readLine()) != null) {
                 String[] data = line.split(" ");
                 Koin g = new Koin(Double.parseDouble(data[0]), Double.parseDouble(data[1]), Integer.parseInt(data[3]));
                 g.setSpeed(Double.parseDouble(data[2]));
@@ -629,13 +811,10 @@ public class Aquarium extends JPanel {
 
             // Always close files.
             bufferedReader.close();
-        }
-        catch(FileNotFoundException ex) {
+        } catch (FileNotFoundException ex) {
             System.out.println(
-                    "Unable to open file '" +
-                            fileName + "'");
-        }
-        catch(IOException ex) {
+                    "Unable to open file '" + fileName + "'");
+        } catch (IOException ex) {
             System.out.println(
                     "Error reading file '"
                             + fileName + "'");
@@ -652,7 +831,7 @@ public class Aquarium extends JPanel {
             BufferedReader bufferedReader =
                     new BufferedReader(fileReader);
 
-            while((line = bufferedReader.readLine()) != null) {
+            while ((line = bufferedReader.readLine()) != null) {
                 String[] data = line.split(" ");
                 Snail g = new Snail(Double.parseDouble(data[0]), Double.parseDouble(data[1]));
                 g.setSpeed(Double.parseDouble(data[2]));
@@ -662,39 +841,48 @@ public class Aquarium extends JPanel {
 
             // Always close files.
             bufferedReader.close();
-        }
-        catch(FileNotFoundException ex) {
+        } catch (FileNotFoundException ex) {
             System.out.println(
-                    "Unable to open file '" +
-                            fileName + "'");
-        }
-        catch(IOException ex) {
+                    "Unable to open file '" + fileName + "'");
+        } catch (IOException ex) {
             System.out.println(
                     "Error reading file '"
                             + fileName + "'");
         }
     }
 
-    public void initDefault(){
+    /**
+     * method init.
+     *
+     *
+     */
+    public void initDefault() {
         duit = 10;
         telur = 0;
         listGuppy.add(new Guppy(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2));
     }
 
     @Override
+    /**
+     * method paint.
+     *
+     *
+     */
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         setBackground(Color.WHITE);
         g.setColor(Color.WHITE);
         g.drawImage(readImage(BACKGROUND_IMAGE), 0, 0, null);
 
-        if (status == HOME){
-            g.drawImage(readImage("C:\\Users\\ASUS ROG\\Desktop\\ArkavQuarium\\src\\draw\\button_start.png"), SCREEN_WIDTH / 2 - 45, SCREEN_HEIGHT / 2 - 50, null);
-            g.drawImage(readImage("C:\\Users\\ASUS ROG\\Desktop\\ArkavQuarium\\src\\draw\\button_load.png"), SCREEN_WIDTH / 2 - 45, SCREEN_HEIGHT / 2 + 50, null);
+        if (status == HOME) {
+            g.drawImage(readImage(
+                    "C:\\Users\\ASUS ROG\\Desktop\\ArkavQuarium\\src\\draw\\button_start.png"), SCREEN_WIDTH / 2 - 45, SCREEN_HEIGHT / 2 - 50, null);
+            g.drawImage(readImage(
+                    "C:\\Users\\ASUS ROG\\Desktop\\ArkavQuarium\\src\\draw\\button_load.png"), SCREEN_WIDTH / 2 - 45, SCREEN_HEIGHT / 2 + 50, null);
             return;
         }
 
-        if (status == FINISH){
+        if (status == FINISH) {
             setBackground(Color.WHITE);
             g.setColor(Color.WHITE);
 
@@ -714,41 +902,42 @@ public class Aquarium extends JPanel {
         g.drawString(hargaTelor, 445, 59);
 
         //beli guppy
-        g.drawImage(readImage("C:\\Users\\ASUS ROG\\Desktop\\ArkavQuarium\\src\\draw\\guppy1.png"), 240, -35, null);
+        g.drawImage(readImage("C:\\Users\\ASUS ROG\\Desktop\\ArkavQuarium\\src\\draw\\guppy1.png"),
+                240, -35, null);
         g.drawString("Rp. 5", 305, 59);
 
         //beli piranha
-        g.drawImage(readImage("C:\\Users\\ASUS ROG\\Desktop\\ArkavQuarium\\src\\draw\\rsz_piranha.png"), 375, 6, null);
+        g.drawImage(readImage("C:\\Users\\ASUS ROG\\Desktop\\ArkavQuarium\\src\\draw\\rsz_piranha.png"),
+                375, 6, null);
         g.drawString("Rp. 20", 375, 59);
 
         //uang
-        //g.drawImage(readImage("C:\\Users\\ASUS ROG\\Desktop\\ArkavQuarium\\src\\draw\\koin.png"), 285, 15, null);
         String uang = "Rp. " + duit;
         g.drawString(uang, 565, 54);
 
         //guppy
-        for (int i = 0; i < listGuppy.size(); i++){
+        for (int i = 0; i < listGuppy.size(); i++) {
             g.drawImage(readImage(listGuppy.get(i).getImagePath()),
                     (int) Math.floor(listGuppy.get(i).getX() - 20),
                     (int) Math.floor(listGuppy.get(i).getY()), null);
         }
 
         //pirana
-        for (int i = 0; i < listPiranha.size(); i++){
+        for (int i = 0; i < listPiranha.size(); i++) {
             g.drawImage(readImage(listPiranha.get(i).getImagePath()),
                     (int) Math.floor(listPiranha.get(i).getX() - 20),
                     (int) Math.floor(listPiranha.get(i).getY()), null);
         }
 
         //Koin
-        for (int i = 0; i < listKoin.size(); i++){
+        for (int i = 0; i < listKoin.size(); i++) {
             g.drawImage(readImage(listKoin.get(i).getImagePath()),
                     (int) Math.floor(listKoin.get(i).getX() - 20),
                     (int) Math.floor(listKoin.get(i).getY()), null);
         }
 
         //fish food
-        for (int i = 0; i < listFood.size(); i++){
+        for (int i = 0; i < listFood.size(); i++) {
             g.drawImage(readImage(listFood.get(i).getImagePath()),
                     (int) Math.floor(listFood.get(i).getX() - 20),
                     (int) Math.floor(listFood.get(i).getY()), null);

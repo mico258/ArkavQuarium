@@ -1,19 +1,39 @@
 package linkedlist;
 
-
+/**
+ *Class Linked List .
+ */
 public class LinkedList<T> {
+    /**
+     *head .
+     */
     Node<T> head;
 
+    /**
+     *constructor LinkedList .
+     */
     public LinkedList() {
         head = null;
     }
 
-    public boolean isEmpty(){
-        if (head == null) return true;
-        else return false;
+    /**
+     *getter isEmpty .
+     * @return boolean .
+     */
+    public boolean isEmpty() {
+        if (head == null) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
-    public int size(){
+    /**
+     *getter size .
+     * @return int .
+     */
+    public int size() {
         int count = 0;
         Node<T> now = head;
         while (now != null) {
@@ -23,66 +43,91 @@ public class LinkedList<T> {
         return count;
     }
 
-    public boolean add(T element){
-        if (head == null){
+    /**
+     *method add .
+     * @param element .
+     * @return boolean .
+     */
+    public boolean add(T element) {
+        if (head == null) {
             head = new Node<T>(element);
-        }
-        else{
+        } else {
             Node<T> temp = head;
-            while (temp.getNext() != null) temp = temp.getNext();
+            while (temp.getNext() != null) {
+                temp = temp.getNext();
+            }
             temp.setNext(new Node<T>(element));
         }
         return true;
     }
 
     //remove element in list with value 'element'
-    public boolean remove(T element){
+    /**
+     *method remove .
+     * @param element .
+     * @return boolean .
+     */
+    public boolean remove(T element) {
         Node<T> prev = null;
         Node<T> now = head;
 
-        while (now != null && now.getData() != element){
+        while (now != null && now.getData() != element) {
             prev = now;
             now = now.getNext();
         }
 
-        if (now != null){
-            if (prev != null){
+        if (now != null) {
+            if (prev != null) {
                 prev.setNext(now.getNext());
-            }else{
+            } else {
                 head = now.getNext();
             }
             now.setNext(null);
             return true;
-        }else return false;
+        } else {
+            return false;
+        }
 
     }
 
-    public boolean remove(int idx){
+    /**
+     *method remove .
+     * @param idx .
+     * @return boolean .
+     */
+    public boolean remove(int idx) {
         Node<T> prev = null;
         Node<T> now = head;
 
         int i = 0;
-        while (i < idx){
+        while (i < idx) {
             prev = now;
             now = now.getNext();
             i++;
         }
 
-        if (now != null){
-            if (prev != null){
+        if (now != null) {
+            if (prev != null) {
                 prev.setNext(now.getNext());
-            }else{
+            } else {
                 head = now.getNext();
             }
             now.setNext(null);
             return true;
-        }else return false;
+        } else {
+            return false;
+        }
 
     }
+    /**
+     *method get .
+     * @param index .
+     * @return T .
+     */
 
     //return value (type = T)
-    public T get(int index){
-        if (index < size()){
+    public T get(int index) {
+        if (index < size()) {
             Node<T> now = head;
             int i = 0;
             while (i < index) {
@@ -90,13 +135,18 @@ public class LinkedList<T> {
                 i++;
             }
             return now.getData();
-        }else{
+        } else {
             return null;
         }
     }
 
-    public Node<T> getNode(int index){
-        if (index < size()){
+    /**
+     *method get .
+     * @param index .
+     * @return Node<T>.
+     */
+    public Node<T> getNode(int index) {
+        if (index < size()) {
             Node<T> now = head;
             int i = 0;
             while (i < index) {
@@ -104,7 +154,7 @@ public class LinkedList<T> {
                 i++;
             }
             return now;
-        }else{
+        } else {
             return null;
         }
     }
