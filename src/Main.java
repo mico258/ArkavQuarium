@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) {
 
         try {
-            Aquarium aquarium = new Aquarium("C:\\Users\\ASUS ROG\\Desktop\\ArkavQuarium\\src\\draw\\guppy1.png");
+            Aquarium aquarium = new Aquarium("D:\\Kuliah\\Semester 6\\OOP\\Java\\ArkavQuarium\\src\\draw\\guppy1.png");
             aquarium.buildFrame();
 
             aquarium.setContent();
